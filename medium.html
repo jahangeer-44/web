@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: gray;
+    }
+
+    #quiz-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    #question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: flex;
+      justify-content: center;
+    }
+
+    .option {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="quiz-container">
+  <div id="question">Question goes here</div>
+  <div class="options">
+    <button class="option" onclick="checkAnswer('A')">Option A</button>
+    <button class="option" onclick="checkAnswer('B')">Option B</button>
+    <button class="option" onclick="checkAnswer('C')">Option C</button>
+    <button class="option" onclick="checkAnswer('D')">Option D</button>
+    
+  </div>
+  <div id="result"></div>
+</div>
+
+<script>
+  const questions = [
+  {
+      question: "What does the term 'DRY' stands for in programming language?",
+      options: {
+        A: "Don't repeat yourself",
+        B: "Develop,Reuse,Yield",
+        C: "Duplicate,Repeat,Yield",
+        D: "Define,Refactor,Yield"
+      },
+      correctAnswer: "A"
+    },
+
+    // Add more questions as needed
+    {
+      question: "What i the difference between 'let' ?",
+      options: {
+        A: " 'let' allows reassignment of values while 'const' doesn't ",
+        B: "'const' allows reassignment of values while 'let' doesn't",
+        C: "both are same and cannot be reassignment",
+        D: "both prevent the variable from being used "
+      },
+      correctAnswer: "A"
+    },
+    {
+      question: "what does the API stands for in programming?",
+      options: {
+        A: "Advanced programming interface",
+        B: "Application program interface",
+        C: "Advanced protocol integration",
+        D: "Automated programming interface"
+      },
+      correctAnswer: "B"
+    },
+    {
+      question: "Which sorting alogorithm has the best average time complexity?",
+      options: {
+        A: "Bubble sort",
+        B: "Merge sort",
+        C: "Quick sort",
+        D: "Insertion sort;"
+      },
+      correctAnswer: "C"
+    },
+    {
+      question: "in java script what does the 'typeof' operator return when used on an array?",
+      options: {
+        A: "array",
+        B: "object",
+        C: "array list",
+        D: "undefined"
+      },
+      correctAnswer: "B"
+    },
+
+  ];
+
+  let currentQuestionIndex = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+    document.getElementById('question').innerText = currentQuestion.question;
+
+    const options = currentQuestion.options;
+    const optionButtons = document.querySelectorAll('.option');
+
+    for (let i = 0; i < optionButtons.length; i++) {
+      const optionKey = Object.keys(options)[i];
+      optionButtons[i].innerText = options[optionKey];
+    }
+
+    document.getElementById('result').innerText = '';
+  }
+
+  function checkAnswer(selectedOption) {
+    const currentQuestion = questions[currentQuestionIndex];
+
+    if (selectedOption === currentQuestion.correctAnswer) {
+      score++;
+    }
+
+    if (currentQuestionIndex < questions.length - 1) {
+      currentQuestionIndex++;
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    document.getElementById('question').innerText = 'Quiz Completed!';
+    document.querySelector('.options').style.display = 'none';
+    document.getElementById('result').innerText = `Your Score: ${score} / ${questions.length}`;
+  }
+
+  // Initial load
+  loadQuestion();
+</script>
+
+</body>
+</html>
